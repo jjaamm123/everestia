@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8620A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Mountain silhouette -->
+  <polygon points="100,20 40,160 160,160" fill="url(#grad)" filter="url(#glow)" opacity="0.9"/>
+  <!-- Snow cap -->
+  <polygon points="100,20 82,75 118,75" fill="white" opacity="0.85"/>
+  <!-- Inner detail line -->
+  <line x1="100" y1="20" x2="100" y2="160" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+  <!-- "EV" monogram -->
+  <text x="100" y="188" font-family="Bebas Neue, Arial Black, sans-serif" font-size="22"
+        fill="#E8620A" text-anchor="middle" letter-spacing="6" font-weight="bold">EV</text>
+</svg>

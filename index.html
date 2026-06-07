@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Everestia Ventures LLC — Premium nationwide freight, trucking, last-mile delivery, cold-chain, and warehousing solutions across all 48 contiguous US states. Licensed & Insured.">
+  <meta name="keywords" content="freight logistics, trucking, last-mile delivery, FTL, LTL, cold chain, warehousing, nationwide shipping USA">
+  <meta name="author" content="Everestia Ventures LLC">
+  <meta property="og:title" content="Everestia Ventures LLC — Summit Logistics">
+  <meta property="og:description" content="Reliable. Insured. Always on time. Freight solutions coast to coast.">
+  <meta property="og:type" content="website">
+  <title>Everestia Ventures LLC — Logistics &amp; Cargo Solutions</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Override API URL when frontend is not served from the same host as Express -->
+  <script>window.EVERESTIA_API = 'http://localhost:5000';</script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     GLOBAL OVERLAYS
+═══════════════════════════════════════════ -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ── PRELOADER ── -->
+<div id="loader" role="status" aria-label="Loading Everestia Ventures">
+  <img class="loader-logo" src="assets/logo.png" alt="Everestia Ventures LLC logo">
+  <div class="loader-bar-wrap" aria-hidden="true">
+    <div class="loader-bar" id="loader-bar"></div>
+  </div>
+  <div class="loader-pct" id="loader-pct" aria-live="polite">0%</div>
+  <div class="loader-label">Initializing Logistics Network…</div>
+</div>
+
+<!-- ── CUSTOM CURSOR (desktop only) ── -->
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<canvas id="cur-trail" aria-hidden="true"></canvas>
+
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<header>
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo" aria-label="Everestia Ventures LLC — Home">
+      <img src="assets/logo.png" alt="Everestia Ventures LLC logo" width="52" height="52">
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">Everestia Ventures</span>
+        <span class="nav-tagline">Logistics &amp; Cargo Solutions LLC</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#track">Tracking</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button
+      class="mag-btn"
+      id="nav-quote-btn"
+      aria-label="Request a free shipping quote"
+      data-scroll-to="contact">
+      <span>Get a Quote</span>
+    </button>
+
+    <!-- Mobile hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true" hidden>
+    <ul class="mobile-nav-links" role="list">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#track">Tracking</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="mobile-cta">Get a Free Quote →</a>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════ -->
+<section class="hero" id="hero" aria-label="Hero — Everestia Ventures LLC">
+
+  <!-- Background layers -->
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="scan-line" aria-hidden="true"></div>
+
+  <!-- Morphing blobs -->
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="blob blob-3" aria-hidden="true"></div>
+
+  <!-- SVG Mountain Parallax -->
+  <div class="mountain-layer mountain-back" aria-hidden="true">
+    <svg viewBox="0 0 1440 420" preserveAspectRatio="none">
+      <path d="M0,420 L0,260 L180,80 L360,200 L520,20 L700,180 L860,60 L1040,220 L1200,100 L1380,240 L1440,180 L1440,420Z" fill="rgba(10,24,69,0.92)"/>
+      <path d="M490,20 L464,85 L552,85Z" fill="rgba(255,255,255,0.28)"/>
+      <path d="M860,60 L838,110 L892,110Z" fill="rgba(255,255,255,0.22)"/>
+    </svg>
+  </div>
+  <div class="mountain-layer mountain-front" aria-hidden="true">
+    <svg viewBox="0 0 1440 420" preserveAspectRatio="none">
+      <path d="M0,420 L0,300 L220,160 L400,260 L600,120 L780,280 L940,160 L1100,290 L1280,180 L1440,250 L1440,420Z" fill="rgba(14,31,91,0.72)"/>
+    </svg>
+  </div>
+
+  <!-- Particle canvas -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- Hero content -->
+  <div class="hero-content">
+    <div class="hero-badge" aria-label="Nationwide USA — Licensed and Insured LLC">
+      <span class="badge-dot" aria-hidden="true"></span>
+      <span class="badge-text">Nationwide USA &nbsp;·&nbsp; Licensed &amp; Insured LLC</span>
+    </div>
+
+    <h1 class="hero-h1" id="hero-title">
+      <span class="split-word w-white" data-word="SUMMIT"></span>
+      <span class="split-word w-orange" data-word="LOGISTICS" style="position:relative;">
+        <span class="glitch" data-text="LOGISTICS" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;"></span>
+      </span>
+      <span class="split-word w-ghost" data-word="SOLUTIONS"></span>
+    </h1>
+
+    <p class="hero-sub">
+      <strong>Everestia Ventures LLC</strong> moves freight coast to coast across all 48 contiguous states.
+      Reliable. Insured. Always on time.
+    </p>
+
+    <div class="hero-btns">
+      <button
+        class="btn-explode"
+        id="hero-quote-btn"
+        aria-label="Get a free freight quote"
+        data-scroll-to="contact">
+        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+        Get a Free Quote
+      </button>
+      <button
+        class="btn-ghost2"
+        id="hero-track-btn"
+        aria-label="Track your shipment"
+        data-scroll-to="track">
+        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        Track Shipment
+      </button>
+    </div>
+
+    <!-- Animated hero stats -->
+    <div class="hero-stats" aria-label="Key performance indicators">
+      <div class="h-stat">
+        <div class="h-stat-num" data-target="500" data-suffix="+">0+</div>
+        <div class="h-stat-label">Routes Covered</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">98.9%</div>
+        <div class="h-stat-label">On-Time Rate</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">24/7</div>
+        <div class="h-stat-label">Live Support</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num" data-target="48">0</div>
+        <div class="h-stat-label">States Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICE TICKER
+═══════════════════════════════════════════ -->
+<div class="ticker" role="marquee" aria-label="Services offered">
+  <div class="ticker-track" id="ticker" aria-hidden="true">
+    <span class="ticker-item">FULL TRUCKLOAD FREIGHT<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">LAST-MILE DELIVERY<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">LTL SHIPPING<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">TEMPERATURE CONTROLLED<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">NATIONWIDE USA<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">GPS TRACKING<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">WAREHOUSING &amp; STORAGE<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">24/7 LIVE SUPPORT<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <!-- Duplicate set for seamless loop -->
+    <span class="ticker-item">FULL TRUCKLOAD FREIGHT<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">LAST-MILE DELIVERY<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">LTL SHIPPING<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">TEMPERATURE CONTROLLED<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">NATIONWIDE USA<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">GPS TRACKING<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">WAREHOUSING &amp; STORAGE<span class="ticker-sep" aria-hidden="true">✦</span></span>
+    <span class="ticker-item">24/7 LIVE SUPPORT<span class="ticker-sep" aria-hidden="true">✦</span></span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SHIPMENT TRACKING
+═══════════════════════════════════════════ -->
+<section class="track-section" id="track" aria-label="Shipment tracking">
+  <div class="track-card rv">
+    <div class="track-card-accent" aria-hidden="true"></div>
+
+    <div class="track-header">
+      <div class="track-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="track-title">Track Your <span>Shipment</span></h2>
+        <p class="track-sub">Enter your shipment ID for live location and ETA updates</p>
+      </div>
+    </div>
+
+    <!-- Tracking form — isolated for AJAX attachment -->
+    <form class="track-form" id="tracking-form" novalidate aria-label="Shipment tracking form">
+      <div class="track-input-group">
+        <label for="trackingId" class="sr-only">Tracking ID or Shipment Reference</label>
+        <input
+          class="track-input"
+          type="text"
+          id="trackingId"
+          name="trackingId"
+          placeholder="Enter tracking ID or shipment reference…"
+          autocomplete="off"
+          required
+          minlength="4"
+          aria-required="true"
+          aria-describedby="tracking-hint">
+        <span id="tracking-hint" class="sr-only">Enter your 4+ character tracking ID and press Track Now</span>
+        <button class="track-btn" id="track-submit-btn" type="submit" aria-label="Track shipment now">
+          <span>Track Now</span>
+          <svg class="btn-icon-sm" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="track-status" id="track-status" role="alert" aria-live="polite" hidden></div>
+    </form>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════ -->
+<section class="services" id="services" aria-label="Our core logistics services">
+  <div class="services-top-rule" aria-hidden="true"></div>
+
+  <div class="sec-header">
+    <div class="sec-header-left">
+      <div class="eyebrow rv">
+        <span class="eyebrow-bar" aria-hidden="true"></span>
+        What We Offer
+      </div>
+      <h2 class="sec-h2 rv">OUR <span>CORE</span><br><em>SERVICES</em></h2>
+    </div>
+    <p class="sec-desc rv-r">
+      Enterprise-grade freight and logistics solutions built for businesses that demand precision, speed, and total accountability across every mile.
+    </p>
+  </div>
+
+  <div class="svc-grid" role="list">
+
+    <!-- Card 1: FTL -->
+    <article class="svc-card rv" id="svc-ftl" role="listitem" aria-label="Full Truckload service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">01</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Freight</span>
+          <span class="svc-badge svc-badge--popular">Most Popular</span>
+        </div>
+        <h3 class="svc-title">Full Truckload (FTL)</h3>
+        <p class="svc-text">Dedicated trucks for large-volume shipments. Direct non-stop routes with real-time GPS tracking and full cargo accountability from pickup to delivery.</p>
+        <ul class="svc-features" aria-label="FTL features">
+          <li>Dedicated trailer — your cargo only</li>
+          <li>Real-time GPS monitoring</li>
+          <li>Direct, non-stop routing</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+    <!-- Card 2: LTL -->
+    <article class="svc-card rv" id="svc-ltl" role="listitem" aria-label="LTL and Partial Loads service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">02</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Freight</span>
+          <span class="svc-badge svc-badge--value">Cost-Efficient</span>
+        </div>
+        <h3 class="svc-title">LTL &amp; Partial Loads</h3>
+        <p class="svc-text">Cost-efficient shared freight for smaller shipments. Consolidated routes with reliable delivery windows and zero compromise on cargo safety or documentation.</p>
+        <ul class="svc-features" aria-label="LTL features">
+          <li>Shared space, individual billing</li>
+          <li>Verified delivery windows</li>
+          <li>Full liability coverage</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+    <!-- Card 3: Last-Mile -->
+    <article class="svc-card rv" id="svc-lastmile" role="listitem" aria-label="Last-Mile Delivery service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">03</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Delivery</span>
+          <span class="svc-badge svc-badge--fast">Same-Day Available</span>
+        </div>
+        <h3 class="svc-title">Last-Mile Delivery</h3>
+        <p class="svc-text">Rapid final-leg delivery to commercial &amp; residential addresses. Same-day and next-day options with live driver tracking for complete end-customer visibility.</p>
+        <ul class="svc-features" aria-label="Last-Mile features">
+          <li>Same-day &amp; next-day options</li>
+          <li>Residential &amp; commercial drops</li>
+          <li>Live driver tracking link</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+    <!-- Card 4: Cold Chain -->
+    <article class="svc-card rv" id="svc-coldchain" role="listitem" aria-label="Temperature-Controlled service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">04</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Specialized</span>
+          <span class="svc-badge svc-badge--premium">Pharma Ready</span>
+        </div>
+        <h3 class="svc-title">Temperature-Controlled</h3>
+        <p class="svc-text">Cold-chain transport for pharma, food &amp; perishables. Continuous temperature monitoring with full compliance documentation included at every stage.</p>
+        <ul class="svc-features" aria-label="Cold Chain features">
+          <li>Continuous temp monitoring</li>
+          <li>FDA / FSMA compliance docs</li>
+          <li>Pharmaceutical &amp; food-grade</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+    <!-- Card 5: Long-Haul -->
+    <article class="svc-card rv" id="svc-longhaul" role="listitem" aria-label="Long-Haul and Interstate service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">05</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Interstate</span>
+          <span class="svc-badge svc-badge--nationwide">48 States</span>
+        </div>
+        <h3 class="svc-title">Long-Haul &amp; Interstate</h3>
+        <p class="svc-text">Reliable cross-country freight across all 48 contiguous states. Experienced drivers, full DOT compliance, and guaranteed on-time delivery every trip.</p>
+        <ul class="svc-features" aria-label="Long-Haul features">
+          <li>All 48 contiguous states</li>
+          <li>Full DOT compliance</li>
+          <li>Experienced long-haul drivers</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+    <!-- Card 6: Warehousing -->
+    <article class="svc-card rv" id="svc-warehouse" role="listitem" aria-label="Warehousing and Storage service">
+      <div class="svc-card-top-line" aria-hidden="true"></div>
+      <div class="svc-num" aria-hidden="true">06</div>
+      <div class="svc-icon-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>
+        </svg>
+      </div>
+      <div class="svc-content">
+        <div class="svc-meta">
+          <span class="svc-category">Storage</span>
+          <span class="svc-badge svc-badge--secure">24/7 Secured</span>
+        </div>
+        <h3 class="svc-title">Warehousing &amp; Storage</h3>
+        <p class="svc-text">Secure short &amp; long-term warehousing with inventory management, pick-and-pack fulfillment, and seamless supply chain integration capabilities.</p>
+        <ul class="svc-features" aria-label="Warehousing features">
+          <li>Inventory management system</li>
+          <li>Pick, pack &amp; fulfillment</li>
+          <li>24/7 secured facilities</li>
+        </ul>
+      </div>
+      <div class="svc-link" aria-hidden="true">Learn More <span class="svc-arrow-icon">→</span></div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     WHY US
+═══════════════════════════════════════════ -->
+<section class="why" id="why" aria-label="Why choose Everestia Ventures">
+  <!-- Visual card side -->
+  <div class="why-visual-wrap rv-l">
+    <div class="why-card">
+      <div class="why-card-shine" aria-hidden="true"></div>
+      <img class="why-logo" src="assets/logo.png" alt="Everestia Ventures LLC — Your Logistics Partner">
+      <div class="why-glow" aria-hidden="true"></div>
+      <div class="why-card-grid" aria-hidden="true"></div>
+    </div>
+
+    <!-- Floating stat badges -->
+    <div class="stat-badge stat-badge-1" aria-label="98.9% On-Time Delivery Rate">
+      <div class="sb-num" data-target="98" data-suffix=".9%">0%</div>
+      <div class="sb-label">On-Time Rate</div>
+    </div>
+    <div class="stat-badge stat-badge-2" aria-label="24/7 Live Support">
+      <div class="sb-num">24/7</div>
+      <div class="sb-label">Live Support</div>
+    </div>
+    <div class="stat-badge stat-badge-3" aria-label="Licensed and Insured LLC">
+      <div class="sb-num">LLC</div>
+      <div class="sb-label">Licensed &amp; Insured</div>
+    </div>
+  </div>
+
+  <!-- Content side -->
+  <div class="why-right rv-r">
+    <div class="eyebrow">
+      <span class="eyebrow-bar" aria-hidden="true"></span>
+      The Everestia Difference
+    </div>
+    <h2 class="sec-h2">WHY <span>CHOOSE</span> US</h2>
+    <p class="why-sub">We're not just movers — we're your dedicated logistics partner. Built on trust, powered by technology, committed to perfection on every mile.</p>
+
+    <div class="why-list" role="list">
+      <div class="why-item" role="listitem">
+        <div class="why-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">Fully Licensed &amp; Insured LLC</div>
+          <p class="wi-text">Every shipment is covered from pickup to delivery. Registered, bonded, and fully insured for complete peace of mind.</p>
+        </div>
+      </div>
+
+      <div class="why-item" role="listitem">
+        <div class="why-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">Real-Time GPS Tracking</div>
+          <p class="wi-text">Live location on every shipment. You always know exactly where your cargo is and its precise estimated arrival.</p>
+        </div>
+      </div>
+
+      <div class="why-item" role="listitem">
+        <div class="why-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">24/7 Customer Support</div>
+          <p class="wi-text">Call, text, or email anytime. Our team is always on standby — ready to resolve any issue in minutes, not hours.</p>
+        </div>
+      </div>
+
+      <div class="why-item" role="listitem">
+        <div class="why-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">Transparent Pricing</div>
+          <p class="wi-text">No hidden fees, no surprises. Get an upfront quote and pay exactly what you're quoted — every single time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     ANIMATED STATS COUNTER
+═══════════════════════════════════════════ -->
+<section class="stats-section" aria-label="Company statistics">
+  <div class="stats-grid">
+    <div class="stat-box rv" aria-label="1,200 plus shipments delivered">
+      <div class="stat-ring" aria-hidden="true"></div>
+      <div class="stat-n" data-target="1200" data-suffix="+">0</div>
+      <div class="stat-l">Shipments Delivered</div>
+    </div>
+    <div class="stat-box rv" aria-label="98.9 percent on-time delivery">
+      <div class="stat-ring" aria-hidden="true"></div>
+      <div class="stat-n" data-target="98" data-suffix=".9%">0</div>
+      <div class="stat-l">On-Time Delivery</div>
+    </div>
+    <div class="stat-box rv" aria-label="All 48 states served">
+      <div class="stat-ring" aria-hidden="true"></div>
+      <div class="stat-n" data-target="48">0</div>
+      <div class="stat-l">States Served</div>
+    </div>
+    <div class="stat-box rv" aria-label="24/7 Live Support">
+      <div class="stat-ring" aria-hidden="true"></div>
+      <div class="stat-n">24/7</div>
+      <div class="stat-l">Live Support</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PROCESS STEPS
+═══════════════════════════════════════════ -->
+<section class="process" id="process" aria-label="How it works — our 4-step process">
+  <div class="process-header">
+    <div class="eyebrow rv" style="justify-content:center;">
+      <span class="eyebrow-bar" aria-hidden="true"></span>
+      How It Works
+    </div>
+    <h2 class="sec-h2 rv" style="text-align:center;margin-top:12px;">4 SIMPLE <span>STEPS</span></h2>
+  </div>
+
+  <div class="proc-grid">
+    <div class="proc-connector" aria-hidden="true"></div>
+
+    <div class="proc-step rv">
+      <div class="proc-circle" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+      </div>
+      <div class="proc-step-num" aria-hidden="true">01</div>
+      <h3 class="proc-title">Request a Quote</h3>
+      <p class="proc-text">Fill out our form with cargo details, origin &amp; destination. Get a transparent, itemized quote within minutes.</p>
+    </div>
+
+    <div class="proc-step rv">
+      <div class="proc-circle" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"/></svg>
+      </div>
+      <div class="proc-step-num" aria-hidden="true">02</div>
+      <h3 class="proc-title">Schedule Pickup</h3>
+      <p class="proc-text">Choose your pickup window. Our professional driver arrives on schedule and loads your cargo with full care and accountability.</p>
+    </div>
+
+    <div class="proc-step rv">
+      <div class="proc-circle" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+      </div>
+      <div class="proc-step-num" aria-hidden="true">03</div>
+      <h3 class="proc-title">In Transit</h3>
+      <p class="proc-text">Track live with GPS. We monitor every mile and proactively communicate any updates to ensure on-time, damage-free delivery.</p>
+    </div>
+
+    <div class="proc-step rv">
+      <div class="proc-circle" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="proc-step-num" aria-hidden="true">04</div>
+      <h3 class="proc-title">Delivered</h3>
+      <p class="proc-text">Cargo arrives safely. Instant confirmation with proof-of-delivery documentation sent directly to your email or portal.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA BAND
+═══════════════════════════════════════════ -->
+<section class="cta-band" aria-label="Call to action — get a free quote">
+  <div class="cta-band-grid" aria-hidden="true"></div>
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="cta-glow2" aria-hidden="true"></div>
+  <div class="cta-watermark" aria-hidden="true">EVERESTIA</div>
+
+  <div class="cta-inner rv">
+    <div class="cta-eyebrow">
+      <span class="eyebrow">
+        <span class="eyebrow-bar" aria-hidden="true"></span>
+        Ready to Ship?
+      </span>
+    </div>
+    <h2 class="cta-h2">MOVE YOUR<br><span>CARGO TODAY</span></h2>
+    <p class="cta-sub">Free quote. No obligations. We respond within 1 hour — because your time and your freight are both valuable.</p>
+    <div class="cta-btns">
+      <button class="btn-explode" id="cta-quote-btn" aria-label="Get a free shipping quote" data-scroll-to="contact">
+        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+        Get a Free Quote
+      </button>
+      <a class="cta-phone" href="tel:+16824641308" aria-label="Call Everestia Ventures LLC">
+        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        +1 (682) 464-1308
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT / QUOTE FORM
+═══════════════════════════════════════════ -->
+<section class="contact" id="contact" aria-label="Contact us and request a quote">
+  <!-- Left: contact info -->
+  <div class="contact-left rv-l">
+    <div class="eyebrow">
+      <span class="eyebrow-bar" aria-hidden="true"></span>
+      Get In Touch
+    </div>
+    <h2 class="sec-h2 contact-h2">REQUEST A<br><span>QUOTE</span></h2>
+    <p class="contact-intro">Fill out the form and our logistics team will respond with a tailored, itemized quote within one hour. No obligations.</p>
+
+    <nav class="contact-info" aria-label="Contact information">
+      <a href="tel:+16824641308" class="cp" id="contact-phone">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Phone</div>
+          <div class="cp-val">+1 (682) 464-1308</div>
+        </div>
+      </a>
+
+      <a href="mailto:ventureseverestiallc@gmail.com" class="cp" id="contact-email">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Email</div>
+          <div class="cp-val">ventureseverestiallc@gmail.com</div>
+        </div>
+      </a>
+
+      <a href="https://www.facebook.com/share/1CQrS2zUxk/" target="_blank" rel="noopener noreferrer" class="cp" id="contact-facebook">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Facebook</div>
+          <div class="cp-val">Everestia Ventures LLC</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/ventrureseverestiallc" target="_blank" rel="noopener noreferrer" class="cp" id="contact-instagram">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Instagram</div>
+          <div class="cp-val">@ventrureseverestiallc</div>
+        </div>
+      </a>
+
+      <div class="cp cp--static" aria-label="Service area: All 48 contiguous US states">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Service Area</div>
+          <div class="cp-val">All 48 Contiguous States</div>
+        </div>
+      </div>
+
+      <div class="cp cp--static" aria-label="Hours: 24/7, 365 days a year">
+        <div class="cp-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <div class="cp-label">Hours</div>
+          <div class="cp-val">24/7 — 365 Days a Year</div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Right: Quote form — isolated for Fetch/AJAX attachment -->
+  <div class="cf rv-r">
+    <div class="cf-top-bar" aria-hidden="true"></div>
+    <div class="cf-header">
+      <h3 class="cf-title">Freight Quote Calculator</h3>
+      <p class="cf-subtitle">Complete the form below for an instant estimate</p>
+    </div>
+
+    <!-- Multi-step progress indicator -->
+    <div class="form-steps" role="tablist" aria-label="Quote form steps">
+      <div class="form-step active" data-step="1" role="tab" aria-selected="true" aria-controls="step-panel-1">
+        <div class="step-dot" aria-hidden="true">1</div>
+        <span>Contact</span>
+      </div>
+      <div class="step-line" aria-hidden="true"></div>
+      <div class="form-step" data-step="2" role="tab" aria-selected="false" aria-controls="step-panel-2">
+        <div class="step-dot" aria-hidden="true">2</div>
+        <span>Shipment</span>
+      </div>
+      <div class="step-line" aria-hidden="true"></div>
+      <div class="form-step" data-step="3" role="tab" aria-selected="false" aria-controls="step-panel-3">
+        <div class="step-dot" aria-hidden="true">3</div>
+        <span>Details</span>
+      </div>
+    </div>
+
+    <form class="quote-form" id="quote-form" novalidate aria-label="Request a freight quote">
+
+      <!-- Step 1: Contact Info -->
+      <fieldset class="form-panel active" id="step-panel-1" role="tabpanel" aria-labelledby="step-1-label">
+        <legend id="step-1-label" class="sr-only">Step 1: Contact Information</legend>
+
+        <div class="f-row">
+          <div class="fg">
+            <label class="fl" for="fullName">Full Name <span class="req" aria-label="required">*</span></label>
+            <input class="fi" type="text" id="fullName" name="fullName"
+              placeholder="John Smith"
+              required autocomplete="name"
+              aria-required="true" aria-describedby="fullName-error">
+            <span class="field-error" id="fullName-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="company">Company</label>
+            <input class="fi" type="text" id="company" name="company"
+              placeholder="Acme Corp LLC"
+              autocomplete="organization"
+              aria-describedby="company-hint">
+            <span class="field-hint" id="company-hint">Optional for sole shippers</span>
+          </div>
+        </div>
+
+        <div class="f-row">
+          <div class="fg">
+            <label class="fl" for="phone">Phone <span class="req" aria-label="required">*</span></label>
+            <input class="fi" type="tel" id="phone" name="phone"
+              placeholder="+1 (555) 000-0000"
+              required autocomplete="tel"
+              pattern="[\+]?[0-9\s\-\(\)]{7,20}"
+              aria-required="true" aria-describedby="phone-error">
+            <span class="field-error" id="phone-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="email">Email <span class="req" aria-label="required">*</span></label>
+            <input class="fi" type="email" id="email" name="email"
+              placeholder="you@company.com"
+              required autocomplete="email"
+              aria-required="true" aria-describedby="email-error">
+            <span class="field-error" id="email-error" role="alert" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-step-next" id="step1-next" aria-label="Continue to shipment details">
+          Continue <span aria-hidden="true">→</span>
+        </button>
+      </fieldset>
+
+      <!-- Step 2: Shipment Info -->
+      <fieldset class="form-panel" id="step-panel-2" role="tabpanel" aria-labelledby="step-2-label" hidden>
+        <legend id="step-2-label" class="sr-only">Step 2: Shipment Information</legend>
+
+        <div class="f-row">
+          <div class="fg">
+            <label class="fl" for="originCity">Origin City &amp; State <span class="req" aria-label="required">*</span></label>
+            <input class="fi" type="text" id="originCity" name="originCity"
+              placeholder="Los Angeles, CA"
+              required
+              aria-required="true" aria-describedby="originCity-error">
+            <span class="field-error" id="originCity-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="destinationCity">Destination City &amp; State <span class="req" aria-label="required">*</span></label>
+            <input class="fi" type="text" id="destinationCity" name="destinationCity"
+              placeholder="New York, NY"
+              required
+              aria-required="true" aria-describedby="destinationCity-error">
+            <span class="field-error" id="destinationCity-error" role="alert" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label class="fl" for="serviceType">Service Type <span class="req" aria-label="required">*</span></label>
+          <select class="fs fi" id="serviceType" name="serviceType"
+            required
+            aria-required="true" aria-describedby="serviceType-error">
+            <option value="" disabled selected>— Select a Service —</option>
+            <option value="FTL">Full Truckload (FTL)</option>
+            <option value="LTL">Less Than Truckload (LTL)</option>
+            <option value="lastmile">Last-Mile Delivery</option>
+            <option value="temperature">Temperature-Controlled</option>
+            <option value="longhaul">Long-Haul / Interstate</option>
+            <option value="warehousing">Warehousing &amp; Storage</option>
+          </select>
+          <span class="field-error" id="serviceType-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <div class="f-row">
+          <div class="fg">
+            <label class="fl" for="weight">Est. Weight (lbs)</label>
+            <input class="fi" type="number" id="weight" name="weight"
+              placeholder="e.g. 5000"
+              min="1" max="80000"
+              aria-describedby="weight-hint">
+            <span class="field-hint" id="weight-hint">Max 80,000 lbs for standard FTL</span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="pickupDate">Preferred Pickup Date</label>
+            <input class="fi" type="date" id="pickupDate" name="pickupDate"
+              aria-label="Preferred pickup date">
+          </div>
+        </div>
+
+        <div class="f-row step-nav-row">
+          <button type="button" class="btn-step-back" id="step2-back" aria-label="Go back to contact info">
+            <span aria-hidden="true">←</span> Back
+          </button>
+          <button type="button" class="btn-step-next" id="step2-next" aria-label="Continue to cargo details">
+            Continue <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- Step 3: Cargo Details + Submit -->
+      <fieldset class="form-panel" id="step-panel-3" role="tabpanel" aria-labelledby="step-3-label" hidden>
+        <legend id="step-3-label" class="sr-only">Step 3: Cargo Details</legend>
+
+        <div class="fg">
+          <label class="fl" for="message">Cargo Details &amp; Special Requirements</label>
+          <textarea class="ft" id="message" name="message"
+            placeholder="Describe your cargo: type, dimensions, fragile items, hazmat, temperature range, any special handling instructions…"
+            rows="5"
+            aria-describedby="message-hint"></textarea>
+          <span class="field-hint" id="message-hint">More detail = faster, more accurate quote</span>
+        </div>
+
+        <div class="fg quote-summary" id="quote-summary" aria-label="Quote summary" aria-live="polite">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="f-row step-nav-row">
+          <button type="button" class="btn-step-back" id="step3-back" aria-label="Go back to shipment info">
+            <span aria-hidden="true">←</span> Back
+          </button>
+          <button class="fsub" type="submit" id="quote-submit-btn" aria-label="Submit quote request">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+            <span>Send Request — Get My Quote</span>
+          </button>
+        </div>
+
+        <!-- Form success/error message -->
+        <div class="form-msg" id="form-msg" role="alert" aria-live="polite" hidden></div>
+      </fieldset>
+
+    </form>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="foot-grid">
+    <!-- Brand column -->
+    <div class="foot-brand">
+      <div class="f-brand-row">
+        <img class="f-logo" src="assets/logo.png" alt="Everestia Ventures LLC logo" width="48" height="48">
+        <div>
+          <div class="f-name">Everestia Ventures</div>
+          <div class="f-sub">Logistics &amp; Cargo Solutions LLC</div>
+        </div>
+      </div>
+      <p class="f-desc">Summit-level logistics for businesses that demand reliability. Licensed, insured, and driven to deliver — every time, across all 48 contiguous states.</p>
+      <div class="f-socials" aria-label="Social media links">
+        <a href="https://www.facebook.com/share/1CQrS2zUxk/" target="_blank" rel="noopener noreferrer" class="f-soc" aria-label="Everestia on Facebook">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd"/></svg>
+        </a>
+        <a href="https://www.instagram.com/ventrureseverestiallc" target="_blank" rel="noopener noreferrer" class="f-soc" aria-label="Everestia on Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="tel:+16824641308" class="f-soc" aria-label="Call Everestia Ventures LLC">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        </a>
+        <a href="mailto:ventureseverestiallc@gmail.com" class="f-soc" aria-label="Email Everestia Ventures LLC">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Links columns -->
+    <div>
+      <div class="f-col-title">Services</div>
+      <ul class="f-links" role="list">
+        <li><a href="#svc-ftl">Full Truckload</a></li>
+        <li><a href="#svc-ltl">LTL Freight</a></li>
+        <li><a href="#svc-lastmile">Last-Mile Delivery</a></li>
+        <li><a href="#svc-coldchain">Cold Chain</a></li>
+        <li><a href="#svc-longhaul">Long-Haul</a></li>
+        <li><a href="#svc-warehouse">Warehousing</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="f-col-title">Company</div>
+      <ul class="f-links" role="list">
+        <li><a href="#why">About Us</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#">Safety</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="f-col-title">Support</div>
+      <ul class="f-links" role="list">
+        <li><a href="#track">Track Shipment</a></li>
+        <li><a href="#contact">Get a Quote</a></li>
+        <li><a href="tel:+16824641308">Call Us</a></li>
+        <li><a href="mailto:ventureseverestiallc@gmail.com">Email Us</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="f-bottom">
+    <span>© 2025 Everestia Ventures LLC. All rights reserved.</span>
+    <span>
+      <a href="#">Privacy</a> ·
+      <a href="#">Terms</a> ·
+      <a href="#">DOT Compliance</a>
+    </span>
+  </div>
+</footer>
+
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

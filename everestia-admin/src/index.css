@@ -1,0 +1,41 @@
+/* Tailwind v4 — CSS-first configuration */
+@import "tailwindcss";
+
+/* ── Everestia brand custom properties ─────────────────────── */
+@theme {
+  --color-navy-deep:  #04091E;
+  --color-navy-mid:   #0A1845;
+  --color-navy-light: #0F2060;
+  --color-orange:     #E8620A;
+  --color-orange-mid: #FF8C00;
+  --color-orange-glow:rgba(232, 98, 10, 0.25);
+  --color-muted:      #7A8BB5;
+  --color-border:     rgba(255, 255, 255, 0.08);
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Inter', sans-serif;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: #04091E;
+    color: #E8ECF5;
+    margin: 0;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar        { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track  { background: #04091E; }
+  ::-webkit-scrollbar-thumb  { background: #E8620A; border-radius: 10px; }
+
+  /* Selection */
+  ::selection { background: rgba(232, 98, 10, 0.3); color: #fff; }
+}
