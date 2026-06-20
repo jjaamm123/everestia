@@ -7,18 +7,16 @@
  * Module Index:
  *   1.  Loader            — Preloader with animated percentage counter
  *   2.  HeroText          — Split-letter character reveal animation
- *   3.  Cursor            — Custom dual-ring cursor (desktop only)
- *   4.  CursorTrail       — HTML5 Canvas particle trail
- *   5.  HeroParticles     — Connected node canvas particle network
- *   6.  Navigation        — Scroll-solidify nav + mobile menu drawer
- *   7.  CardTilt3D        — 3D perspective tilt on service cards
- *   8.  MagneticButtons   — Magnetic cursor-pull on CTA buttons
- *   9.  ScrollReveal      — IntersectionObserver fade/slide reveals
- *   10. CounterAnimator   — Intersection-triggered number count-up
- *   11. ExplodeParticles  — Click burst particle effect on CTAs
- *   12. TrackingForm      — Isolated tracking form handler (AJAX-ready)
- *   13. QuoteForm         — Multi-step quote form with validation
- *   14. SmoothScroll      — Anchor link smooth-scroll polyfill
+ *   3.  HeroParticles     — Connected node canvas particle network
+ *   4.  Navigation        — Scroll-solidify nav + mobile menu drawer
+ *   5.  CardTilt3D        — 3D perspective tilt on service cards
+ *   6.  MagneticButtons   — Magnetic cursor-pull on CTA buttons
+ *   7.  ScrollReveal      — IntersectionObserver fade/slide reveals
+ *   8.  CounterAnimator   — Intersection-triggered number count-up
+ *   9.  ExplodeParticles  — Click burst particle effect on CTAs
+ *   10. TrackingForm      — Isolated tracking form handler (AJAX-ready)
+ *   11. QuoteForm         — Multi-step quote form with validation
+ *   12. SmoothScroll      — Anchor link smooth-scroll polyfill
  * ═══════════════════════════════════════════════════════════
  */
 
@@ -82,102 +80,6 @@ function escapeHtml(value) {
 }
 
 
-/* ═══════════════════════════════════════════
-   1. PRELOADER
-   Animates a loading bar and percentage counter.
-   Hides loader and boots the site when done.
-═══════════════════════════════════════════ */
-(function Loader() {
-  const loaderEl  = document.getElementById('loader');
-  const loaderPct = document.getElementById('loader-pct');
-  const loaderBar = document.getElementById('loader-bar');
-
-  if (!loaderEl) return;
-
-  let pct = 0;
-
-  const interval = setInterval(() => {
-    // Increment with variable speed — fast then slow near end
-    const remaining = 100 - pct;
-    const increment  = Math.random() * (remaining * 0.15) + 0.5;
-    pct = Math.min(pct + increment, 100);
-
-    const flooredPct = Math.floor(pct);
-    loaderPct.textContent = `${flooredPct}%`;
-    loaderBar.style.width = `${pct}%`;
-
-    if (pct >= 100) {
-      clearInterval(interval);
-      loaderPct.textContent = '100%';
-      loaderBar.style.width = '100%';
-
-      setTimeout(() => {
-        loaderEl.classList.add('hide');
-        initSite();
-      }, 380);
-    }
-  }, 75);
-})();
-
-
-/**
- * initSite — Boots all interactive features after loader hides.
- * Called once when preloader finishes.
- */
-function initSite() {
-  applyDeviceClasses();
-  HeroText.init();
-
-  if (!isTouchDevice() && !prefersReducedMotion()) {
-    Cursor.init();
-    CursorTrail.init();
-  }
-
-  if (!prefersReducedMotion()) {
-    HeroParticles.init();
-  }
-
-  if (!isTouchDevice()) {
-    CardTilt3D.init();
-    MagneticButtons.init();
-  }
-
-  ScrollReveal.init();
-  CounterAnimator.init();
-  ExplodeParticles.init();
-  TrackingForm.init();
-  QuoteForm.init();
-}
-
-/* Boot nav immediately (visible during preloader) */
-function bootEarlyModules() {
-  applyDeviceClasses();
-  Navigation.init();
-  _initScrollToButtons();
-}
-
-/**
- * Delegated handler for [data-scroll-to="sectionId"] buttons.
- * FIX: Replaces the four inline onclick attributes that were removed from HTML.
- * Using delegation means any dynamically-inserted buttons also work.
- */
-function _initScrollToButtons() {
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-scroll-to]');
-    if (!btn) return;
-    const targetId = btn.dataset.scrollTo;
-    const target   = document.getElementById(targetId);
-    if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', bootEarlyModules);
-} else {
-  bootEarlyModules();
-}
-
 
 /* ═══════════════════════════════════════════
    2. HERO TEXT — SPLIT LETTER REVEAL
@@ -203,138 +105,7 @@ const HeroText = {
 };
 
 
-/* ═══════════════════════════════════════════
-   3. CUSTOM CURSOR
-   Dual-ring cursor with smooth lag on the ring.
-   Automatically disabled on touch devices via CSS.
-═══════════════════════════════════════════ */
-const Cursor = {
-  dot:    null,
-  ring:   null,
-  mx: 0, my: 0,  // Current mouse position (dot follows instantly)
-  rx: 0, ry: 0,  // Ring position (lerped for smooth lag)
-  rafId:  null,
 
-  init() {
-    this.dot  = document.getElementById('cur');
-    this.ring = document.getElementById('cur-ring');
-
-    if (!this.dot || !this.ring) return;
-
-    // Position dot instantly on mouse move
-    document.addEventListener('mousemove', (e) => {
-      this.mx = e.clientX;
-      this.my = e.clientY;
-      this.dot.style.left = `${this.mx}px`;
-      this.dot.style.top  = `${this.my}px`;
-    });
-
-    // Handle cursor leaving/entering window
-    document.addEventListener('mouseleave', () => {
-      this.dot.style.opacity  = '0';
-      this.ring.style.opacity = '0';
-    });
-
-    document.addEventListener('mouseenter', () => {
-      this.dot.style.opacity  = '1';
-      this.ring.style.opacity = '1';
-    });
-
-    // Expand ring on interactive elements (delegated — works for all current/future nodes)
-    const interactiveSelectors =
-      'a, button, .svc-card, .why-card, .why-item, .cp, .proc-step, .stat-box, .track-btn, .form-step, input, select, textarea, label';
-
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(interactiveSelectors)) {
-        document.body.classList.add('cur-big');
-      }
-    });
-
-    document.addEventListener('mouseout', (e) => {
-      const from = e.target.closest(interactiveSelectors);
-      const to = e.relatedTarget && e.relatedTarget.closest
-        ? e.relatedTarget.closest(interactiveSelectors)
-        : null;
-      if (from && !to) {
-        document.body.classList.remove('cur-big');
-      }
-    });
-
-    this._animateRing();
-  },
-
-  /** Smoothly lerps the ring to follow the dot with inertia. */
-  _animateRing() {
-    const lerp = 0.1;
-    this.rx += (this.mx - this.rx) * lerp;
-    this.ry += (this.my - this.ry) * lerp;
-    this.ring.style.left = `${this.rx}px`;
-    this.ring.style.top  = `${this.ry}px`;
-    this.rafId = requestAnimationFrame(() => this._animateRing());
-  }
-};
-
-
-/* ═══════════════════════════════════════════
-   4. CURSOR TRAIL — CANVAS PARTICLE STREAM
-   Draws fading orange dots behind the cursor
-   on a full-screen fixed canvas element.
-═══════════════════════════════════════════ */
-const CursorTrail = {
-  canvas:  null,
-  ctx:     null,
-  trail:   [],
-  rafId:   null,
-  MAX_TRAIL: 80, // FIX: Cap trail length to prevent unbounded memory growth on fast movement
-
-  init() {
-    this.canvas = document.getElementById('cur-trail');
-    if (!this.canvas) return;
-
-    this.ctx = this.canvas.getContext('2d');
-    this._resize();
-
-    window.addEventListener('resize', debounce(() => this._resize()));
-
-    document.addEventListener('mousemove', (e) => {
-      // FIX: Trim oldest entries when trail exceeds cap
-      if (this.trail.length >= this.MAX_TRAIL) {
-        this.trail.splice(0, this.trail.length - this.MAX_TRAIL + 1);
-      }
-      this.trail.push({ x: e.clientX, y: e.clientY, alpha: 1 });
-    });
-
-    this._draw();
-  },
-
-  _resize() {
-    this.canvas.width  = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-  },
-
-  _draw() {
-    const ctx = this.ctx;
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // Decay and render each trail particle
-    for (let i = this.trail.length - 1; i >= 0; i--) {
-      const p = this.trail[i];
-      p.alpha -= 0.055;
-
-      if (p.alpha <= 0) {
-        this.trail.splice(i, 1);
-        continue;
-      }
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 3 * p.alpha, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(232, 98, 10, ${p.alpha * 0.4})`;
-      ctx.fill();
-    }
-
-    this.rafId = requestAnimationFrame(() => this._draw());
-  }
-};
 
 
 /* ═══════════════════════════════════════════
@@ -862,8 +633,7 @@ const QuoteForm = {
     document.getElementById('step2-back')?.addEventListener('click', () => this._prevStep(2));
     document.getElementById('step3-back')?.addEventListener('click', () => this._prevStep(3));
 
-    // Submit
-    this.form.addEventListener('submit', (e) => this._onSubmit(e));
+
 
     // Set min date for pickup to today
     const pickupInput = document.getElementById('pickupDate');
@@ -1030,18 +800,11 @@ const QuoteForm = {
       submitBtn.querySelector('span').textContent = 'Sending…';
     }
 
-    const payload = {
-      fullName:        document.getElementById('fullName')?.value.trim(),
-      company:         document.getElementById('company')?.value.trim(),
-      phone:           document.getElementById('phone')?.value.trim(),
-      email:           document.getElementById('email')?.value.trim(),
-      originCity:      document.getElementById('originCity')?.value.trim(),
-      destinationCity: document.getElementById('destinationCity')?.value.trim(),
-      serviceType:     document.getElementById('serviceType')?.value,
-      weight:          document.getElementById('weight')?.value,
-      pickupDate:      document.getElementById('pickupDate')?.value,
-      message:         document.getElementById('message')?.value.trim(),
-    };
+    const formData = new FormData(this.form);
+    const payload = {};
+    formData.forEach((value, key) => {
+      payload[key] = typeof value === 'string' ? value.trim() : value;
+    });
 
     try {
       const res = await fetch(`${API_BASE}/api/quotes`, {
@@ -1137,3 +900,67 @@ const QuoteForm = {
     attachSmoothScroll();
   }
 })();
+
+function startLoader() {
+  const loaderEl = document.getElementById('loader');
+  const loaderPct = document.getElementById('loader-pct');
+  const loaderBar = document.getElementById('loader-bar');
+  if (!loaderEl) return;
+  let pct = 0;
+  const interval = setInterval(() => {
+    const remaining = 100 - pct;
+    const increment = Math.random() * (remaining * 0.15) + 0.5;
+    pct = Math.min(pct + increment, 100);
+    const flooredPct = Math.floor(pct);
+    loaderPct.textContent = `${flooredPct}%`;
+    loaderBar.style.width = `${pct}%`;
+    if (pct >= 100) {
+      clearInterval(interval);
+      loaderPct.textContent = '100%';
+      loaderBar.style.width = '100%';
+      setTimeout(() => {
+        loaderEl.classList.add('hide');
+        initSite();
+      }, 380);
+    }
+  }, 75);
+}
+
+function initSite() {
+  applyDeviceClasses();
+  HeroText.init();
+  if (!prefersReducedMotion()) {
+    HeroParticles.init();
+  }
+  if (!isTouchDevice()) {
+    CardTilt3D.init();
+    MagneticButtons.init();
+  }
+  ScrollReveal.init();
+  CounterAnimator.init();
+  ExplodeParticles.init();
+  TrackingForm.init();
+  QuoteForm.init();
+}
+
+function bootEarlyModules() {
+  applyDeviceClasses();
+  Navigation.init();
+  _initScrollToButtons();
+}
+
+function _initScrollToButtons() {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-scroll-to]');
+    if (!btn) return;
+    const targetId = btn.dataset.scrollTo;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  bootEarlyModules();
+  startLoader();
+});

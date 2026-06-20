@@ -20,6 +20,9 @@ import {
   Inbox,
 } from 'lucide-react';
 import api from './api/axios';
+import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const STATUSES = ['Pending', 'Reviewed', 'Responded'];
 
@@ -157,6 +160,104 @@ function StatCard({ label, value, icon: Icon, accent, sub }) {
   );
 }
 
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+async function geocodeCity(city) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(city)}&email=ventureseverestiallc@gmail.com`;
+  const res = await fetch(url, {
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+  if (!res.ok) throw new Error('Geocoding failed');
+  const data = await res.json();
+  if (!data || data.length === 0) throw new Error(`City "${city}" not found`);
+  return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+}
+
+function MapBoundsUpdater({ bounds }) {
+  const map = useMap();
+  useEffect(() => {
+    if (bounds) {
+      map.fitBounds(bounds, { padding: [30, 30] });
+    }
+  }, [bounds, map]);
+  return null;
+}
+
+function RouteMap({ originCity, destinationCity }) {
+  const [coords, setCoords] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    let active = true;
+    async function loadCoords() {
+      setLoading(true);
+      setError(null);
+      try {
+        const originCoords = await geocodeCity(originCity);
+        const destCoords = await geocodeCity(destinationCity);
+        if (active) {
+          setCoords({ origin: originCoords, destination: destCoords });
+        }
+      } catch (err) {
+        if (active) {
+          setError(err.message);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }
+    loadCoords();
+    return () => {
+      active = false;
+    };
+  }, [originCity, destinationCity]);
+  if (loading) {
+    return (
+      <div className="h-[250px] w-full rounded-xl bg-white/5 flex items-center justify-center text-[#7A8BB5] text-xs">
+        <RefreshCw size={14} className="animate-spin mr-2" />
+        Geocoding route coordinates...
+      </div>
+    );
+  }
+  if (error || !coords) {
+    return (
+      <div className="h-[250px] w-full rounded-xl bg-white/5 border border-red-500/10 flex flex-col items-center justify-center text-center p-4 text-[#7A8BB5] text-xs">
+        <AlertCircle size={16} className="text-red-400 mb-1.5" />
+        <span>Unable to resolve route coordinates: {error}</span>
+      </div>
+    );
+  }
+  const bounds = [coords.origin, coords.destination];
+  return (
+    <div className="h-[250px] w-full rounded-xl overflow-hidden border border-white/10 relative z-10">
+      <MapContainer
+        key={`${coords.origin.join(',')}-${coords.destination.join(',')}`}
+        bounds={bounds}
+        style={{ height: '100%', width: '100%', background: '#04091E' }}
+        zoomControl={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        />
+        <Marker position={coords.origin} />
+        <Marker position={coords.destination} />
+        <Polyline positions={[coords.origin, coords.destination]} color="#E8620A" weight={3} dashArray="5, 10" />
+        <MapBoundsUpdater bounds={bounds} />
+      </MapContainer>
+    </div>
+  );
+}
+
 function QuoteModal({ quote, onClose }) {
   if (!quote) return null;
 
@@ -245,26 +346,24 @@ function QuoteModal({ quote, onClose }) {
               <p className="text-white/80 text-sm leading-relaxed whitespace-pre-wrap">{quote.message}</p>
             </div>
           )}
+
+          <div className="mt-4">
+            <p className="text-[#7A8BB5] text-[11px] uppercase tracking-widest font-medium mb-2">Live Route Map</p>
+            <RouteMap key={quote._id} originCity={quote.originCity} destinationCity={quote.destinationCity} />
+          </div>
         </div>
 
-        <div className="p-4 border-t border-white/8 flex gap-3">
+        <div className="p-4 border-t border-white/8">
           <a
-            href={`mailto:${quote.email}?subject=Re: Your Freight Quote Request — Everestia Ventures`}
-            className="flex-1 flex items-center justify-center gap-2 text-sm font-semibold
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${quote.email}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 text-sm font-semibold
                        bg-[#E8620A] hover:bg-[#FF8C00] text-white rounded-xl py-2.5
                        transition-colors"
           >
             <Mail size={15} />
-            Reply via Email
-          </a>
-          <a
-            href={`tel:${quote.phone}`}
-            className="flex items-center justify-center gap-2 text-sm font-semibold px-4
-                       bg-white/6 hover:bg-white/10 text-white rounded-xl py-2.5
-                       border border-white/10 transition-colors"
-          >
-            <Phone size={15} />
-            Call
+            Reply with Email
           </a>
         </div>
       </div>

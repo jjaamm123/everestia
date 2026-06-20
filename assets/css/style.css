@@ -98,13 +98,6 @@ body {
   background: var(--color-navy-deep);
   color: var(--color-white);
   overflow-x: hidden;
-  /*
-   * FIX: cursor:none is intentional for custom cursor on desktop.
-   * The @media (hover:none) block below immediately overrides this
-   * for touch screens at CSS parse time — before JS ever runs.
-   * This prevents a "cursor-flash" window on mobile.
-   */
-  cursor: none;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -248,105 +241,6 @@ body {
 }
 
 
-/* ═══════════════════════════════════════════
-   CUSTOM CURSOR (desktop only — disabled on touch)
-═══════════════════════════════════════════ */
-#cur {
-  position: fixed;
-  z-index: var(--z-cursor);
-  width: 10px;
-  height: 10px;
-  background: var(--color-orange);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: screen;
-  transition: width 0.15s ease, height 0.15s ease, background 0.2s ease;
-  will-change: left, top;
-}
-
-#cur-ring {
-  position: fixed;
-  z-index: calc(var(--z-cursor) - 1);
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid rgba(232, 98, 10, 0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width 0.1s ease, height 0.1s ease, border-color 0.2s ease;
-  will-change: left, top;
-}
-
-#cur-trail {
-  position: fixed;
-  inset: 0;
-  z-index: calc(var(--z-cursor) - 2);
-  pointer-events: none;
-}
-
-/* Cursor expanded state on interactive elements */
-body.cur-big #cur {
-  width: 24px;
-  height: 24px;
-  background: var(--color-orange-mid);
-  mix-blend-mode: normal;
-}
-body.cur-big #cur-ring {
-  width: 64px;
-  height: 64px;
-  border-color: rgba(232, 98, 10, 0.7);
-}
-
-/* Touch device override — restore native cursor & pointer affordances */
-@media (hover: none) and (pointer: coarse) {
-  body,
-  a,
-  button,
-  input,
-  select,
-  textarea,
-  .mag-btn,
-  .btn-explode,
-  .btn-ghost2,
-  .svc-card,
-  .track-btn,
-  .fsub,
-  .btn-step-next,
-  .btn-step-back {
-    cursor: auto !important;
-  }
-
-  #cur,
-  #cur-ring,
-  #cur-trail {
-    display: none !important;
-  }
-}
-
-body.touch-device {
-  cursor: auto;
-}
-
-body.touch-device a,
-body.touch-device button,
-body.touch-device input,
-body.touch-device select,
-body.touch-device textarea,
-body.touch-device .svc-card {
-  cursor: pointer;
-}
-
-body.reduced-motion #cur,
-body.reduced-motion #cur-ring,
-body.reduced-motion #cur-trail {
-  display: none;
-}
-
-body.reduced-motion {
-  cursor: auto;
-}
-
 
 /* ═══════════════════════════════════════════
    NAVIGATION
@@ -467,7 +361,7 @@ nav.solid {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   border-radius: var(--radius-sm);
   transition: color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   flex-shrink: 0;
@@ -885,7 +779,7 @@ nav.solid {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-orange);
   transition: transform var(--transition-spring), box-shadow var(--transition-base);
@@ -912,7 +806,7 @@ nav.solid {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   border-radius: var(--radius-sm);
   transition: all var(--transition-base);
 }
@@ -1159,7 +1053,7 @@ nav.solid {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   border-radius: 0 10px 10px 0;
   transition: opacity var(--transition-fast), filter var(--transition-fast);
   position: relative;
@@ -1278,7 +1172,6 @@ nav.solid {
   background: var(--color-navy-card);
   border: 1px solid var(--border-subtle);
   padding: 44px 32px 36px;
-  cursor: none;
   transition:
     transform var(--transition-slow),
     box-shadow var(--transition-base),
@@ -2397,7 +2290,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: var(--radius-sm);
-  cursor: none;
+  cursor: pointer;
   transition: opacity var(--transition-fast), transform var(--transition-base);
   justify-self: end;
 }
@@ -2414,7 +2307,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator {
   font-weight: 600;
   letter-spacing: 0.06em;
   border-radius: var(--radius-sm);
-  cursor: none;
+  cursor: pointer;
   transition: all var(--transition-base);
 }
 
@@ -2457,7 +2350,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
