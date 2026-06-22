@@ -5,6 +5,7 @@ const Admin = require('../models/Admin');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
+  console.log("INCOMING LOGIN REQUEST:", req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({
