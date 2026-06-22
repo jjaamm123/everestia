@@ -8,7 +8,7 @@
  */
 
 const express = require('express');
-const adminAuth = require('../middleware/adminAuth');
+const authMiddleware = require('../middleware/authMiddleware');
 const {
   getAllQuotes,
   updateQuoteStatus,
@@ -17,7 +17,7 @@ const {
 
 const router = express.Router();
 
-router.use(adminAuth);
+router.use(authMiddleware);
 
 /**
  * @route   GET /api/admin/quotes

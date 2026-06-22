@@ -16,8 +16,8 @@ import {
   Weight,
   CalendarDays,
   MessageSquare,
-  ChevronRight,
   Inbox,
+  LogOut,
 } from 'lucide-react';
 import api from './api/axios';
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
@@ -371,7 +371,7 @@ function QuoteModal({ quote, onClose }) {
   );
 }
 
-export default function Dashboard() {
+export default function Dashboard({ onLogout }) {
   const [quotes,        setQuotes]        = useState([]);
   const [isLoading,     setIsLoading]     = useState(true);
   const [error,         setError]         = useState(null);
@@ -451,6 +451,15 @@ export default function Dashboard() {
             >
               <RefreshCw size={13} className={isLoading ? 'animate-spin' : ''} />
               Refresh
+            </button>
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-1.5 text-xs font-medium text-red-400 hover:text-red-300
+                         bg-red-500/5 hover:bg-red-500/10 border border-red-500/20
+                         rounded-lg px-3 py-2 transition-all"
+            >
+              <LogOut size={13} />
+              Logout
             </button>
           </div>
         </div>

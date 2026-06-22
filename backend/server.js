@@ -28,6 +28,7 @@ const { registerMongooseEvents } = require('./config/db');
 const quoteRoutes    = require('./routes/quoteRoutes');
 const adminRoutes    = require('./routes/adminRoutes');
 const shipmentRoutes = require('./routes/shipmentRoutes');
+const authRoutes     = require('./routes/authRoutes');
 const { verifyConnection } = require('./utils/emailService');
 
 const app  = express();
@@ -164,6 +165,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/quotes',  quoteLimiter,  quoteRoutes);    // POST /api/quotes
 app.use('/api/track',   trackLimiter,  shipmentRoutes); // GET  /api/track/:trackingId
 app.use('/api/admin',                  adminRoutes);    // GET/PATCH/DELETE /api/admin/quotes/*
+app.use('/api/auth',                   authRoutes);
 
 /* ─────────────────────────────────────────────────────────────
    404 — unknown /api/* paths
