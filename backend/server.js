@@ -39,7 +39,7 @@ const PORT = process.env.PORT || 5000;
    "null" is accepted in development to allow file:// origins
    (when opening index.html directly without a dev server).
 ───────────────────────────────────────────────────────────── */
-const allowedOrigins = (process.env.CLIENT_URL || 'http://127.0.0.1:5500')
+const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173,http://127.0.0.1:5500,http://localhost:5500')
   .split(',')
   .map((o) => o.trim())
   .filter(Boolean);
